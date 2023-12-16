@@ -1,5 +1,7 @@
 package oncall.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import oncall.model.Employees;
 import oncall.model.WorkingMonth;
 import oncall.view.InputView;
@@ -31,7 +33,20 @@ public class InputController {
         return WorkingMonth.from(value);
     }
 
-    public Employees getWeekdayEmployees() {
+    public List<Employees> getWorkers() {
+        while (true) {
+            try {
+                List<Employees> result = new ArrayList<>();
+                result.add(getWeekdayEmployees());
+                result.add(getHolidayEmployees());
+                return result;
+            } catch (IllegalArgumentException exception) {
+                outputView.printErrorMessage(exception);
+            }
+        }
+    }
+
+    private Employees getWeekdayEmployees() {
         while (true) {
             try {
                 return readWeekdayEmployees();
@@ -46,14 +61,8 @@ public class InputController {
         return Employees.from(value);
     }
 
-    public Employees getHolidayEmployees() {
-        while (true) {
-            try {
-                return readHolidayEmployees();
-            } catch (IllegalArgumentException exception) {
-                outputView.printErrorMessage(exception);
-            }
-        }
+    private Employees getHolidayEmployees() {
+        return readHolidayEmployees();
     }
 
     private Employees readHolidayEmployees() {

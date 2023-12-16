@@ -1,8 +1,10 @@
 package oncall.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -34,5 +36,17 @@ class EmployeesTest {
     void createDuplicate(String value) {
         assertThatThrownBy(() -> Employees.from(value))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("equal 확인")
+    void createCheckEqual() {
+        Employees a = Employees.from("동글,앙마,있지,믿지,날자");
+        Employees b = Employees.from("있지,동글,믿지,앙마,날자");
+        Employees c = Employees.from("있지,동글,믿지,앙마,행복");
+
+        boolean equals = a.equals(b);
+        assertThat(equals).isTrue();
+        assertThat(b.equals(c)).isFalse();
     }
 }

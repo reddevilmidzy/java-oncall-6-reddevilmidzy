@@ -2,6 +2,7 @@ package oncall.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import oncall.constant.ErrorMessage;
 import oncall.model.Employees;
 import oncall.model.WorkingMonth;
 import oncall.view.InputView;
@@ -37,12 +38,21 @@ public class InputController {
         while (true) {
             try {
                 List<Employees> result = new ArrayList<>();
-                result.add(getWeekdayEmployees());
-                result.add(getHolidayEmployees());
+                Employees weekday = getWeekdayEmployees();
+                result.add(weekday);
+                Employees holiday = getHolidayEmployees();
+                validateEqual(weekday, holiday);
+                result.add(holiday);
                 return result;
             } catch (IllegalArgumentException exception) {
                 outputView.printErrorMessage(exception);
             }
+        }
+    }
+
+    private void validateEqual(Employees weekday, Employees holiday) {
+        if (!weekday.equals(holiday)) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
     }
 

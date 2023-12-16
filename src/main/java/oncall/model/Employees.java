@@ -60,4 +60,15 @@ public class Employees {
     public String toString() {
         return workers.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Employees target)) {
+            return false;
+        }
+        return Set.copyOf(workers).equals(Set.copyOf(target.workers));
+    }
 }

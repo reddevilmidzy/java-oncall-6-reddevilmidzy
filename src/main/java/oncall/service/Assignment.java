@@ -40,34 +40,33 @@ public class Assignment {
                 holidayIndex += 1;
                 if (holidayWorker.equals(preWorker)) {
                     dayOffWorker = holidayWorker;
-                    result.add(holiday.get(holidayIndex));
-                    preWorker = holiday.get(holidayIndex - 1);
+                    preWorker = assignWorker(result, holiday.get(holidayIndex), holiday.get(holidayIndex - 1));
                     continue;
                 } else if (dayOffWorker != null) {
-                    result.add(dayOffWorker);
-                    preWorker = dayOffWorker;
+                    preWorker = assignWorker(result, dayOffWorker, dayOffWorker);
                     dayOffWorker = null;
                     continue;
                 }
-                result.add(holidayWorker);
-                preWorker = holidayWorker;
+                preWorker = assignWorker(result, holidayWorker, holidayWorker);
                 continue;
             }
             weekdayIndex += 1;
             if (weekdayWorker.equals(preWorker)) {
                 dayOffWorker = weekdayWorker;
-                result.add(weekday.get(weekdayIndex));
-                preWorker = weekday.get(weekdayIndex - 1);
+                preWorker = assignWorker(result, weekday.get(weekdayIndex), weekday.get(weekdayIndex - 1));
                 continue;
             } else if (dayOffWorker != null) {
-                result.add(dayOffWorker);
-                preWorker = dayOffWorker;
+                preWorker = assignWorker(result, dayOffWorker, dayOffWorker);
                 dayOffWorker = null;
                 continue;
             }
-            result.add(weekdayWorker);
-            preWorker = weekdayWorker;
+            preWorker = assignWorker(result, weekdayWorker, weekdayWorker);
         }
         return result;
+    }
+
+    private Employee assignWorker(List<Employee> result, Employee currentWorker, Employee preWorker) {
+        result.add(currentWorker);
+        return preWorker;
     }
 }

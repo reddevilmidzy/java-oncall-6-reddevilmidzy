@@ -1,5 +1,8 @@
 package oncall.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Iterator;
 import java.util.List;
 import oncall.model.Employee;
 import oncall.model.Employees;
@@ -48,5 +51,19 @@ class AssignmentTest {
         //then
         OutputView outputView = new OutputView();
         outputView.printAssignResult(from.getMonthDate(), assign);
+
+        Iterator<Employee> iterator = assign.iterator();
+        Employee pre = iterator.next();
+        boolean duplicate = false;
+
+        while (iterator.hasNext()) {
+            Employee cur = iterator.next();
+            if (pre.equals(cur)) {
+                duplicate = true;
+                break;
+            }
+            pre = cur;
+        }
+        assertThat(duplicate).isFalse();
     }
 }

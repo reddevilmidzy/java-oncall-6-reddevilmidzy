@@ -31,19 +31,33 @@ public class InputController {
         return WorkingMonth.from(value);
     }
 
-    public Employees getEmployees() {
+    public Employees getWeekdayEmployees() {
         while (true) {
             try {
-                return readEmployees();
+                return readWeekdayEmployees();
             } catch (IllegalArgumentException exception) {
                 outputView.printErrorMessage(exception);
             }
         }
     }
 
-
-    private Employees readEmployees() {
+    private Employees readWeekdayEmployees() {
         String value = inputView.readWeekdayEmergencyWorker();
+        return Employees.from(value);
+    }
+
+    public Employees getHolidayEmployees() {
+        while (true) {
+            try {
+                return readHolidayEmployees();
+            } catch (IllegalArgumentException exception) {
+                outputView.printErrorMessage(exception);
+            }
+        }
+    }
+
+    private Employees readHolidayEmployees() {
+        String value = inputView.readHolidayEmergencyWorker();
         return Employees.from(value);
     }
 }

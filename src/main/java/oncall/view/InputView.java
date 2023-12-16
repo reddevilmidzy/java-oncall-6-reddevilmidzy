@@ -14,6 +14,11 @@ public class InputView {
         return readLine();
     }
 
+    public String readHolidayEmergencyWorker() {
+        System.out.print("휴일 비상 근무 순번대로 사원 닉네임을 입력하세요> ");
+        return readLine();
+    }
+
     protected String readLine() {
         return Console.readLine();
     }

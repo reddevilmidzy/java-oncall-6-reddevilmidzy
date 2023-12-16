@@ -17,7 +17,7 @@ public class OnCallController {
 
     public void run() {
         WorkingMonth workingMonth = inputController.getWorkingMonth();
-        Employees weekDayEmployees = inputController.getEmployees();
-
+        Employees weekDayEmployees = inputController.getWeekdayEmployees();
+        Employees holiDayEmployees = inputController.getHolidayEmployees();
     }
 }

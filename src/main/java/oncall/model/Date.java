@@ -1,6 +1,22 @@
 package oncall.model;
 
+import java.util.List;
+
 public class Date {
+
+    private static final List<Date> holidays;
+
+    static {
+        holidays = List.of(
+                new Date(Month.JANUARY, 1),
+                new Date(Month.MARCH, 1),
+                new Date(Month.MAY, 5),
+                new Date(Month.JUNE, 6),
+                new Date(Month.AUGUST, 15),
+                new Date(Month.OCTOBER, 3),
+                new Date(Month.OCTOBER, 9),
+                new Date(Month.DECEMBER, 25));
+    }
 
     private final Month month;
     private final int date;
@@ -11,36 +27,15 @@ public class Date {
         this.month = month;
         this.date = date;
         this.day = day;
-        this.holiday = checkHoliday(month, date);
+        this.holiday = holidays.contains(new Date(month, date));
     }
 
-
-    //TODO: 리팩토링 대상
-    private boolean checkHoliday(Month month, int date) {
-        if (month.equals(Month.JANUARY) && date == 1) {
-            return true;
-        }
-        if (month.equals(Month.MARCH) && date == 1) {
-            return true;
-        }
-        if (month.equals(Month.MAY) && date == 5) {
-            return true;
-        }
-        if (month.equals(Month.JUNE) && date == 6) {
-            return true;
-        }
-        if (month.equals(Month.AUGUST) && date == 15) {
-            return true;
-        }
-        if (month.equals(Month.OCTOBER) && date == 3) {
-            return true;
-        }
-        if (month.equals(Month.OCTOBER) && date == 9) {
-            return true;
-        }
-        return month.equals(Month.DECEMBER) && date == 25;
+    private Date(Month month, int date) {
+        this.month = month;
+        this.date = date;
+        this.day = null;
+        this.holiday = true;
     }
-
 
     public boolean isWeekend() {
         return day.equals(Day.SAT) || day.equals(Day.SUN);
@@ -56,5 +51,16 @@ public class Date {
             return month.getValue() + "월 " + date + "일 " + day.getName() + "(휴일)";
         }
         return month.getValue() + "월 " + date + "일 " + day.getName();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Date target)) {
+            return false;
+        }
+        return month.equals(target.month) && date == target.date;
     }
 }

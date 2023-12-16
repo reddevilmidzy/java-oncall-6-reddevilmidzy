@@ -14,8 +14,6 @@ public class Assignment {
 
     private int weekdayIndex;
     private int holidayIndex;
-    private boolean weekdayDuplicate = false;
-    private boolean holidayDuplicate = false;
 
     public Assignment(int weekdayIndex, int holidayIndex) {
         this.weekdayIndex = weekdayIndex;
@@ -26,13 +24,12 @@ public class Assignment {
         List<Date> dates = month.getMonthDate();
         Iterator<Date> iterator = dates.iterator();
         Employees weekday = repository.getEmployees(Week.WEEKDAY);
-        System.out.println("weekday = " + weekday);
         Employees holiday = repository.getEmployees(Week.HOLIDAY);
-        System.out.println("holiday = " + holiday);
 
         List<Employee> result = new ArrayList<>();
 
         Employee preWorker = null;
+        Employee dayOffWorker = null;
 
         while (iterator.hasNext()) {
             Date date = iterator.next();
@@ -40,39 +37,37 @@ public class Assignment {
             Employee weekdayWorker = weekday.get(weekdayIndex);
 
             if (date.isHoliday() || date.isWeekend()) {
+                holidayIndex += 1;
                 if (holidayWorker.equals(preWorker)) {
-                    Employee nextEmployee = holiday.get(holidayIndex + 1);
-                    result.add(nextEmployee);
-                    holidayDuplicate = true;
+                    dayOffWorker = holidayWorker;
+                    result.add(holiday.get(holidayIndex));
+                    preWorker = holiday.get(holidayIndex - 1);
                     continue;
-                } else if (holidayDuplicate) {
-                    result.add(holidayWorker);
-                    holidayIndex += 2;
-                    holidayDuplicate = false;
+                } else if (dayOffWorker != null) {
+                    result.add(dayOffWorker);
+                    preWorker = dayOffWorker;
+                    dayOffWorker = null;
                     continue;
                 }
                 result.add(holidayWorker);
                 preWorker = holidayWorker;
-                holidayIndex++;
                 continue;
             }
-
+            weekdayIndex += 1;
             if (weekdayWorker.equals(preWorker)) {
-                Employee nextEmployee = weekday.get(weekdayIndex + 1);
-                result.add(nextEmployee);
-                weekdayDuplicate = true;
+                dayOffWorker = weekdayWorker;
+                result.add(weekday.get(weekdayIndex));
+                preWorker = weekday.get(weekdayIndex - 1);
                 continue;
-            } else if (weekdayDuplicate) {
-                result.add(weekdayWorker);
-                weekdayIndex += 2;
-                weekdayDuplicate = false;
+            } else if (dayOffWorker != null) {
+                result.add(dayOffWorker);
+                preWorker = dayOffWorker;
+                dayOffWorker = null;
                 continue;
             }
             result.add(weekdayWorker);
             preWorker = weekdayWorker;
-            weekdayIndex++;
         }
-
         return result;
     }
 }

@@ -6,6 +6,7 @@ import oncall.model.Employees;
 import oncall.model.Week;
 import oncall.model.WorkingMonth;
 import oncall.repository.WorkerRepository;
+import oncall.view.OutputView;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,4 +30,23 @@ class AssignmentTest {
         System.out.println(assign);
     }
 
+
+    @Test
+    @DisplayName("두번 일하지 마!")
+    void createNonDuplicate() {
+        //given
+        Assignment assignment = new Assignment(0, 0);
+        WorkingMonth from = WorkingMonth.from("5,월");
+
+        WorkerRepository workerRepository = new WorkerRepository();
+        workerRepository.register(Week.WEEKDAY, Employees.from("1,2,3,4,5"));
+        workerRepository.register(Week.HOLIDAY, Employees.from("4,3,1,2,5"));
+
+        //when
+        List<Employee> assign = assignment.assign(from, workerRepository);
+
+        //then
+        OutputView outputView = new OutputView();
+        outputView.printAssignResult(from.getMonthDate(), assign);
+    }
 }

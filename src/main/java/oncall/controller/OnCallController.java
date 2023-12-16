@@ -1,5 +1,6 @@
 package oncall.controller;
 
+import oncall.model.Employees;
 import oncall.model.WorkingMonth;
 import oncall.view.OutputView;
 
@@ -16,6 +17,7 @@ public class OnCallController {
 
     public void run() {
         WorkingMonth workingMonth = inputController.getWorkingMonth();
+        Employees weekDayEmployees = inputController.getEmployees();
 
     }
 }

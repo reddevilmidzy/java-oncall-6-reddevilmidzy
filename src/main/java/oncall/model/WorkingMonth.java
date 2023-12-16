@@ -1,5 +1,6 @@
 package oncall.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import oncall.constant.ErrorMessage;
@@ -9,10 +10,10 @@ public class WorkingMonth {
     public static final int MONTH_INDEX = 0;
     public static final int DAY_INDEX = 1;
 
-    private final int month;
+    private final Month month;
     private final Day startDay;
 
-    private WorkingMonth(int month, Day startDay) {
+    private WorkingMonth(Month month, Day startDay) {
         this.month = month;
         this.startDay = startDay;
     }
@@ -20,7 +21,7 @@ public class WorkingMonth {
     public static WorkingMonth from(String value) {
         validateSeparator(value);
         List<String> target = Arrays.stream(value.split(",")).toList();
-        int month = validateAndConvertMonth(target.get(MONTH_INDEX));
+        Month month = Month.valueOfName(target.get(MONTH_INDEX));
         Day day = Day.valueOfName(target.get(DAY_INDEX));
         return new WorkingMonth(month, day);
     }
@@ -40,15 +41,11 @@ public class WorkingMonth {
         }
     }
 
-    private static int validateAndConvertMonth(String value) {
-        try {
-            int month = Integer.parseInt(value);
-            if (month < 1 || month > 12) {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
-            }
-            return month;
-        } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
+    public List<Date> getMonthDate() {
+        List<Date> result = new ArrayList<>();
+        for (int date = 1; date <= month.getLastDay(); date++) {
+            result.add(new Date(month, date, startDay.calculateDay(date)));
         }
+        return result;
     }
 }

@@ -51,4 +51,13 @@ public class Employees {
             throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
     }
+
+    public Employee get(int index) {
+        return workers.get(index % workers.size());
+    }
+
+    @Override
+    public String toString() {
+        return workers.toString();
+    }
 }

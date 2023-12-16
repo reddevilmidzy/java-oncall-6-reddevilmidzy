@@ -3,6 +3,7 @@ package oncall.model;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import oncall.constant.ErrorMessage;
 
 public class Employees {
 
@@ -21,13 +22,13 @@ public class Employees {
 
     private void validateDuplicate(List<Employee> workers) {
         if (Set.copyOf(workers).size() != workers.size()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
     }
 
     private void validateSize(List<Employee> workers) {
         if (workers.size() < MIN_WORKER_COUNT || workers.size() > MAX_WORKER_COUNT) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
     }
 
@@ -41,13 +42,13 @@ public class Employees {
 
     private static void validateSeparator(String value) {
         if (value.trim().isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
         if (value.startsWith(SEPARATOR) || value.endsWith(SEPARATOR)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
         if (value.contains(SEPARATOR.repeat(2))) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
     }
 }

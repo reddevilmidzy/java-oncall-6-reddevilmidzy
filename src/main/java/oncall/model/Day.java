@@ -1,6 +1,7 @@
 package oncall.model;
 
 import java.util.Arrays;
+import oncall.constant.ErrorMessage;
 
 public enum Day {
 
@@ -22,7 +23,7 @@ public enum Day {
         return Arrays.stream(values())
                 .filter(s -> s.name.equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage()));
     }
 
     public String getName() {

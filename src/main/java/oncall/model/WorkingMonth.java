@@ -2,6 +2,7 @@ package oncall.model;
 
 import java.util.Arrays;
 import java.util.List;
+import oncall.constant.ErrorMessage;
 
 public class WorkingMonth {
 
@@ -26,16 +27,16 @@ public class WorkingMonth {
 
     private static void validateSeparator(String value) {
         if (value.trim().isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
         if (value.startsWith(",") || value.endsWith(",")) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
         if (value.contains(",,")) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
         if (!value.contains(",")) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
     }
 
@@ -43,11 +44,11 @@ public class WorkingMonth {
         try {
             int month = Integer.parseInt(value);
             if (month < 1 || month > 12) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
             }
             return month;
         } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
     }
 }

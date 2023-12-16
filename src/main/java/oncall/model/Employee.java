@@ -1,6 +1,7 @@
 package oncall.model;
 
 import java.util.Objects;
+import oncall.constant.ErrorMessage;
 
 public class Employee {
 
@@ -15,10 +16,10 @@ public class Employee {
 
     private void validate(String name) {
         if (name.trim().isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
         if (name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
         //TODO: 이름에 특수문자 포함되지 않게 하기
     }

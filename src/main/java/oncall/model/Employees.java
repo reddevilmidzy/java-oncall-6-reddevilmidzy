@@ -34,7 +34,7 @@ public class Employees {
 
     public static Employees from(String value) {
         validateSeparator(value);
-        List<Employee> result = Arrays.stream(value.split(","))
+        List<Employee> result = Arrays.stream(value.split(SEPARATOR))
                 .map(Employee::new)
                 .toList();
         return new Employees(result);

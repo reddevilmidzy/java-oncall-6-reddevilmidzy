@@ -7,8 +7,9 @@ import oncall.constant.ErrorMessage;
 
 public class WorkingMonth {
 
-    public static final int MONTH_INDEX = 0;
-    public static final int DAY_INDEX = 1;
+    private static final String SEPARATOR = ",";
+    private static final int MONTH_INDEX = 0;
+    private static final int DAY_INDEX = 1;
 
     private final Month month;
     private final Day startDay;
@@ -20,7 +21,7 @@ public class WorkingMonth {
 
     public static WorkingMonth from(String value) {
         validateSeparator(value);
-        List<String> target = Arrays.stream(value.split(",")).toList();
+        List<String> target = Arrays.stream(value.split(SEPARATOR)).toList();
         Month month = Month.valueOfName(target.get(MONTH_INDEX));
         Day day = Day.valueOfName(target.get(DAY_INDEX));
         return new WorkingMonth(month, day);
@@ -30,13 +31,13 @@ public class WorkingMonth {
         if (value.trim().isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
-        if (value.startsWith(",") || value.endsWith(",")) {
+        if (value.startsWith(SEPARATOR) || value.endsWith(SEPARATOR)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
-        if (value.contains(",,")) {
+        if (value.contains(SEPARATOR.repeat(2))) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
-        if (!value.contains(",")) {
+        if (!value.contains(SEPARATOR)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_VAlUE.getMessage());
         }
     }

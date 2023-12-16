@@ -28,8 +28,8 @@ public class OnCallController {
         workerRepository.register(Week.WEEKDAY, workers.get(0));
         workerRepository.register(Week.HOLIDAY, workers.get(1));
         Assignment assignment = new Assignment(0, 0);
+        List<Date> dates = workingMonth.getMonthDate();
         List<Employee> assign = assignment.assign(workingMonth, workerRepository);
-        List<Date> monthDate = workingMonth.getMonthDate();
-
+        outputView.printAssignResult(dates, assign);
     }
 }
